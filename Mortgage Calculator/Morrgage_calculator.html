@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple Mortgage Calculator</title>
+        <style>
+            label 
+            {
+                font-weight: bold;
+                display: innline-block;
+            }
+            input[type='number'] {width: 80px; height: 10px}
+        </style>
+    </head>
+    <h1>Monthly Mortgage Calculator</h1>
+    <form id = "form" method = "post">
+        <label>loan amount: </label><input type = "number" id = "l"> <br>
+        <label>down payment percentage: </label><input type = "number" id = "d"><text>%</text><br>
+        <label>annual interst rate: </label><input type = "number" id = "r"> <text>%</text><br>
+        <label>number of years to pay: </label><input type = "number" id = "t"><br>
+        <button type = "button" onclick="m_cal()">Calculate this for me!</button>
+    </form>
+   <script>
+       function m_cal()
+        {
+            var l = document.getElementById('l').value; //loan amount
+            var d = document.getElementById('d').value/100;
+            l = l-d*l;
+            var r = document.getElementById('r').value/(100*12); //interst rate
+            var t = document.getElementById('t').value*12; // number of years to pay
+
+            document.getElementById("form").reset();
+            if (l == 0||d==0||r==0||t==0) alert("at least one field is empty!");  	
+
+            var p = l*(r*(1+r)**t)/((1+r)**t-1);
+
+            const formatter = new Intl.NumberFormat('en-US', {minimumFractionDigits: 2,maximumFractionDigits: 2,});
+            document.getElementById('ld').innerHTML = formatter.format(l);
+            document.getElementById('p').innerHTML = formatter.format(p);
+            
+        }
+   </script>
+   <br>
+   <label>Loan after down payment: </label> <text id = 'ld'></text><br>
+   <label>Payment per month:</label><text id = 'p'></text>
+</html>
